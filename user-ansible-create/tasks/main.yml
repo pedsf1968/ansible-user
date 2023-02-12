@@ -1,0 +1,15 @@
+---
+# tasks file for user-ansible-create
+
+- name: "Get password"
+  raw: cat /etc/shadow | grep  ansible | cut -d':' -f2
+  register: target_user_password
+  when: inventory_hostname == admin_host
+
+- name: "Record fact"
+  set_fact:
+    target_user_password: "{{ target_user_password.stdout | regex_replace('[\\r\\n\\t]+','')}}"
+  when: inventory_hostname == admin_host
+
+- debug:
+    msg: "Mot de passe {{ target_user_name }}: {{ target_user_password }}"

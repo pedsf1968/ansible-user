@@ -1,0 +1,13 @@
+---
+# tasks file for user-create
+- name: "Create user {{ create_user_name }}"
+  ansible.builtin.user:
+    name: "{{ create_user_name }}"
+    uid: "{{ create_user_uid | default('') }}"
+    comment: "{{ create_user_comment | default( create_user_name ) }}"
+    group: "{{ create_user_group | default( create_user_name ) }}"
+    groups: "{{ create_user_group | default('') }}"
+    system: "{{ create_user_system | default('false') }}"
+    shell: "{{ create_user_shell | default('/bin/bash') }}"
+    create_home: "{{ create_user_create_home | default(true) }}"
+    home: "{{ create_user_home | default('/home/' + create_user_name) }}"

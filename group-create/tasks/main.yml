@@ -1,0 +1,7 @@
+---
+# tasks file for group-create
+- name: Create group
+  ansible.builtin.group:
+    name: "{{ create_group_name }}"
+    gid: "{{ create_group_gid | default('') }}"
+    system: "{{ create_group_system | default('false') }}"

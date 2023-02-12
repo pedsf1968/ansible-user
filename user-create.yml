@@ -1,0 +1,20 @@
+---
+# Create user Playbook
+# 
+# ansible-playbook -K -e 'target_user_name=#### target_group_name=#### target_is_system=yes target_host=####' playbooks/user-create.yml
+# replace #### with your own infra user
+
+- name: "Create ansible user on all server"
+  vars:
+    target_host: admin-server
+    target_user_name: "{{ target_user_name }}"
+    target_user_password: "{{ target_user_password  | default(omit) }}"
+    target_user_comment: "{{ target_user_comment | default(omit) }}"
+    target_group_name: "{{ target_group_name | default(target_user_name) }}"
+    target_is_system: "{{ target_is_system  | default(omit) }}"
+  hosts:  "{{ target_host }}"
+  become: yes
+  become_method: sudo
+  roles:
+    - role: "system/user/user-create"
+

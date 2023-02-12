@@ -1,0 +1,6 @@
+---
+# tasks file for group-delete
+- name: "Remove group {{ create_group_name }}"
+  ansible.builtin.group:
+    name: "{{ create_group_name }}"
+    state: absent
